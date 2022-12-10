@@ -1,59 +1,117 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+    <!DOCTYPE html>
+    <html lang="ja">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会員登録ページ</title>
+    </head>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+    <body style="margin:0px;">
+    <style>
+        body {
+        background-color:white;
+        width:100%;
+        }
+        h1 {
+        margin:0px;
+        }
 
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
+        a {
+        text-decoration:none;
+        }
+        
+        .title {
+        background-color:white;
+        padding-top:14px;
+        padding-bottom:14px;
+        padding-left:35px;
+        }
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
+        .text1 {
+        text-align:center;
+        margin-top:50px;
+        }
+        .form {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        }
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+        input {
+        height:50px;
+        width:500px;
+        border-radius:5px;
+        border:3px solid #a9a9aa;
+        margin-top:20px;
+        box-shadow:2px;
+        
+        }
+        
+        .register-button {
+        width:500px;
+        height:50px;
+        background-color:#4169E1;
+        color:white;
+        cursor: pointer;
+        }
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
+        .text2 {
+        text-align:center;
+        margin-top:25px;
+        }
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+        p {
+        margin:0px;
+        font-size:20px;
+        font-weight:bold;
+        color: #a9a9a9;
+        }
+        
+        .login-button {
+        text-align:center;
+        margin-bottom:12%;
+        color:#4169E1;
+        cursor: pointer;
+        }
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
+        .copyright {
+        margin-top:500px;
+        font-weight:bold;
+        background-color:white;
+        text-align:center;
+        }
+    </style>
 
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+    <div class="title">
+        <h1>Atte</h1>
+    </div>
+    <div class="text1">
+        <h2>会員登録</h2>
+    </div>
+    <form action="{{ route('register') }}" method="POST">
+        @csrf
+    <div class="form">
+        <input type="text" placeholder="名前" name="name" >
+        <input type="text" name="email" placeholder="メールアドレス" >
+        <input type="text" name="password" placeholder="パスワード" >
+        <input type="text" name="check" placeholder="確認用パスワード" >
+        <div class="register">
+            <input type="submit" value="会員登録" class="register-button">
+        </div>
+    </div>
 
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
+    </form>
+    <div class="text2">
+        <p>アカウントをお持ちの方はこちらから</p>
+    </div>
+    <div class="login-button">
+        <a href="/login">ログイン</a>
+    </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
+    <div class="copyright">
+        <small>Atte,inc</small>
+    </div>
+    </body>
 
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    </html>

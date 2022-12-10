@@ -1,56 +1,113 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+    <!DOCTYPE html>
+    <html lang="ja">
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログインページ</title>
+    </head>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <body style="margin:0px;">
+    <style>
+        body {
+        background-color:white;
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+        }
+        .title {
+        background-color:white;
+        }
 
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
+        h1 {
+        margin:0px;
+        padding-top:12px;
+        padding-bottom:12x;
+        padding-left:30px;
+        }
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
+        h3 {
+        margin-top:50px;
+        }
+        
+        h4 {
+        font-weight:bold;
+        font-size:20px;
+        color: #a9a9a9;
+        margin:0;
+        }
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+        .form {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        }
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
+        input {
+        height:50px;
+        width:500px;
+        border-radius:4px;
+        border:3px solid #A9A9A9;
+        margin-bottom:30px;
+        }
+        
+        .register {
+        text-align:center;
+        }
+        .text {
+        text-align:center;
+        margin-top:25px;
+        }
+        
+        .login {
+        margin-top:200px;
+        margin-bottom:30px;
+        text-align:center;
+        }
 
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
+        .login-button{
+        text-align:center;
+        width:500px;
+        height:50px;
+        background-color:#4169E1;
+        color:white;
+        cursor: pointer;
+        }
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
+        a {
+        text-decoration:none;
+        }
+        
+        .copyright {
+        margin-top:500px;
+        font-weight:bold;
+        background-color:white;
+        text-align:center;
+        }
 
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    </style>
+    <div class="title">
+        <h1>Atte</h1>
+    </div>
+    <form action="{{ route('login') }}" method="POST">
+        @csrf
+        <div class="login">
+        <h3>ログイン</h3>
+        </div>
+
+        <div class="form">
+            <input type="text" name="email" placeholder="メールアドレス" >
+            <input type="text" name="password" placeholder="パスワード" >
+            <input type="submit" value="ログイン" class="login-button">
+        </div>
+    </form>
+
+    <div class="text">
+        <h4>アカウントをお持ちでない方はこちらから</h4>
+    </div>
+    <div class="register">
+        <a href="register">会員登録</a>
+    </div>
+
+    <div class="copyright">
+        <small>Atte,inc</small>
+    </div>
+    </html>
