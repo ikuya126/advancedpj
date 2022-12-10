@@ -87,7 +87,7 @@
     <div class="title">
         <h1>Atte</h1>
     </div>
-    <form action="{{ route('login') }}" method="POST">
+    <form action="/login" method="POST">
         @csrf
         <div class="login">
         <h3>ログイン</h3>
