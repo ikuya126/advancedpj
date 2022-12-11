@@ -12,6 +12,10 @@ class AttendController extends Controller
     public function index()
     {
         $user = User::all();
-        return view('/attendance', ['user' => $user]);
+        return view('attendance', ['user' => $user]);
     }
+
+    
+
+    
 }

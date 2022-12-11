@@ -23,7 +23,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($user_info)) {
             $request->session()->regenerate();
-            return redirect()->route('attendance');
+            return redirect()->route('/attendance');
         }
     }
 
