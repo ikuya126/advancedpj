@@ -94,7 +94,7 @@
     <div class="form">
         <input type="text" placeholder="名前" name="name" >
         <input type="text" name="email" placeholder="メールアドレス" >
-        <input type="text" name="password" placeholder="パスワード" >
+        <input type="password" name="password" placeholder="パスワード" >
         <input type="text" name="check" placeholder="確認用パスワード" >
         <div class="register">
             <input type="submit" value="会員登録" class="register-button">

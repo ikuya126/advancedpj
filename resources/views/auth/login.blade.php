@@ -95,7 +95,7 @@
 
         <div class="form">
             <input type="text" name="email" placeholder="メールアドレス" >
-            <input type="text" name="password" placeholder="パスワード" >
+            <input type="password" name="password" placeholder="パスワード" >
             <input type="submit" value="ログイン" class="login-button">
         </div>
     </form>

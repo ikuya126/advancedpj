@@ -22,6 +22,6 @@ class RegisteredController extends Controller
             'email' => $email,
             'password' => Hash::make($password)
         ]);
-        return redirect('auth.login');
+        return redirect('login');
     }
 }
