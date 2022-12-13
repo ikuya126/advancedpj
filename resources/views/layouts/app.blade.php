@@ -5,32 +5,59 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
+	</head>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+	<body style=margin:0px;>
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <style>
 
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    .container {
+        height:100vh;
+    }
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+    header {
+        height:13%;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    footer {
+        height:8%;
+        font-weight:bold;
+        background-color:white;
+        text-align:center;
+        position:relative;
+    }
+
+    .end-title{
+        position:absolute;
+        top:50%;
+    }
+
+    </style>
+
+    <div class="container">
+
+        <header>
+            <h1 >Atte</h1>
+            <div class="header-links">
+                <a href="/attendance" >ホーム</a>
+                <a href="/date" >日付一覧</a>
+                <a href="/logout">ログアウト</a>
+            </div>
+        </header>
+
+        @yield('content')
+
+        <footer>
+        <small class="end-title">Atte,inc</small>
+        </footer>
+
+    </div>
+    
     </body>
+
 </html>

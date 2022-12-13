@@ -32,6 +32,12 @@
         text-align:center;
         margin-top:50px;
         }
+
+        li {
+        color:red;
+        font-weight:bold;
+        }
+
         .form {
         display:flex;
         flex-direction:column;
@@ -89,13 +95,21 @@
     <div class="text1">
         <h2>会員登録</h2>
     </div>
+
     <form action="/register" method="POST">
         @csrf
     <div class="form">
+        @if ($errors->any())
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>
+            @endforeach
+        </ul>
+        @endif    
         <input type="text" placeholder="名前" name="name" >
         <input type="text" name="email" placeholder="メールアドレス" >
         <input type="password" name="password" placeholder="パスワード" >
-        <input type="text" name="check" placeholder="確認用パスワード" >
+        <input type="password" name="check" placeholder="確認用パスワード" >
         <div class="register">
             <input type="submit" value="会員登録" class="register-button">
         </div>

@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<html lang="ja">
+@extends('layouts.app')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>打刻ページ</title>
-</head>
+@section('title')
+打刻ページ
+@endsection
 
-<body style="margin:0px;">
+  @section('content')
+
   <style>
-
-    .container {
-      height:100vh;
-    }
-
-    header {
-      height:10%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
 
     h1 {
       padding-left:35px;
@@ -41,7 +28,7 @@
     }
 
     .main {
-      height:80%;
+      height:79%;
       background-color :#DCDCDC;
     }
 
@@ -56,21 +43,51 @@
     }
     
     .button-box {
-      
+      text-align:center;
+      width:100vw;
+      height:70%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .top-button {
+      width:60%;
+      height:50%;
+      display:flex;
+      justify-content:space-between;
+    }
+
+    .bottom-button {
+      width:60%;
+      height:50%;
+      display:flex;
+      justify-content:space-between;
+    }
+
+    form{
+      width:50%;
+      display:flex;
+      align-items:center;
+      padding: 35px 30px;
+    }
+
+    input {
+      height:100%;
+      width:100%;
+      font-size:30px;
+      font-weight:bold;
+      border:0px;
+      border-radius:8px;
+      cursor: pointer;
+    }
+
+    .button{
+      color:#DCDCDC;
     }
 
     
   </style>
-
-  <div class="container">
-
-    <header>
-      <h1 >Atte</h1>
-      <div class="header-links">
-        <a href="/attendance" >ホーム</a>
-        <a href="/date" >日付一覧</a>
-        <a href="/logout">ログアウト</a>
-    </header>
 
     <div class="main">
 
@@ -79,9 +96,9 @@
       </div>
       <div class="button-box">
         <div class="top-button">
-        <form action="" method="GET">
+        <form action="" method="GET" class="button-form">
           @csrf
-          <input type="submit" value="勤務開始" >
+          <input type="submit" value="勤務開始" class="button">
         </form>
         <form action="" method="POST">
           @csrf
@@ -95,17 +112,13 @@
         </form>
         <form action="" method="POST">
           @csrf
-          <input type="submit" value="休憩終了" >
+          <input type="submit" value="休憩終了" class="button">
         </form>
         </div>
       </div>
-    </div>
-    <footer>
-    <small>Atte,inc</small>
-    </footer>
 
   </div>
 
-</body>
+@endsection
 
 </html>

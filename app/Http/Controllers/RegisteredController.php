@@ -14,6 +14,13 @@ class RegisteredController extends Controller
     }
     public function create(Request $request)
     {
+        
+        $user_info = $request->validate([
+            'name'  => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
         $name = $request->name;
         $email = $request->email;
         $password = $request->password;

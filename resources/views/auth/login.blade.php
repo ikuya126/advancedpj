@@ -35,6 +35,11 @@
         margin:0;
         }
 
+        li {
+        color:red;
+        font-weight:bold;
+        }
+
         .form {
         display:flex;
         flex-direction:column;
@@ -94,6 +99,13 @@
         </div>
 
         <div class="form">
+            @if ($errors->any())
+            <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>
+            @endforeach
+            </ul>
+            @endif
             <input type="text" name="email" placeholder="メールアドレス" >
             <input type="password" name="password" placeholder="パスワード" >
             <input type="submit" value="ログイン" class="login-button">
