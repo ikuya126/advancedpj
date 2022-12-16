@@ -96,21 +96,21 @@
       </div>
       <div class="button-box">
         <div class="top-button">
-        <form action="" method="GET" class="button-form">
+        <form action="/work_start" method="POST" class="button-form">
           @csrf
           <input type="submit" value="勤務開始" class="button">
         </form>
-        <form action="" method="POST">
+        <form action="/work_end" method="POST">
           @csrf
           <input type="submit" value="勤務終了" >
         </form>
         </div>
         <div class="bottom-button">
-        <form action="" method="GET">
+        <form action="/rest_start" method="POST">
           @csrf
           <input type="submit" value="休憩開始" >
         </form>
-        <form action="" method="POST">
+        <form action="/rest_end" method="POST">
           @csrf
           <input type="submit" value="休憩終了" class="button">
         </form>

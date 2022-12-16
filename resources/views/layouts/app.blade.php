@@ -12,6 +12,13 @@
 
     <style>
 
+    .alert-success{
+        text-align:center;
+        font-size:40px;
+        font-weight:bold;
+        color:#A9A9A9;
+    }
+
     .container {
         height:100vh;
     }
@@ -48,8 +55,16 @@
                 <a href="/date" >日付一覧</a>
                 <a href="/logout">ログアウト</a>
             </div>
+
         </header>
 
+        
+        @if (session('successMessage'))
+        <div class="alert-success">
+            {{ session('successMessage') }}
+        </div> 
+        @endif
+        
         @yield('content')
 
         <footer>
@@ -57,6 +72,8 @@
         </footer>
 
     </div>
+
+    
     
     </body>
 

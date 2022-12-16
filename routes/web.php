@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisteredController;
 use App\Http\Controllers\AttendController;
+use App\Http\Controllers\RestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,3 +28,8 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/attendance', [AttendController::class, 'index']);
+Route::post('/work_start', [AttendController::class, 'start']);
+Route::post('/work_end', [AttendController::class, 'end']);
+
+Route::post('/rest_start', [RestController::class, 'start']);
+Route::post('/rest_end', [RestController::class, 'end']);
