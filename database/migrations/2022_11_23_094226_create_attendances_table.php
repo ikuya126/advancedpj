@@ -19,6 +19,8 @@ return new class extends Migration
             $table->date('date');
             $table->datetime('work_start');
             $table->datetime('work_end')->nullable();
+            $table->time('work_time');
+            $table->time('rest_time');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });
