@@ -25,6 +25,7 @@ class RestController extends Controller
         Rest::create([
             'attendances_id' => $attend->user_id,
             'rest_start' => Carbon::now(),
+            'date' => new Carbon('today')
             ]);
 
             return redirect()->back()->with('successMessage', '休憩開始');

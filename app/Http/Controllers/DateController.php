@@ -21,9 +21,9 @@ class DateController extends Controller
 
         $user = Auth::user();
         $data = Attendance::where('user_id',$user->id)->latest()->first();
-        $today = Carbon::today();
+        $today = Carbon::today()->format("Y-m-d");
 
-        $restdates = Rest::where('attendances_id',$data->user_id)->whereDate('date', $today);
+        $restdates = Rest::where('attendances_id',$data->id)->whereDate('date', $today);
 
 
         foreach($restdates as $restdate)
@@ -42,7 +42,7 @@ class DateController extends Controller
             }
         }
 
-        $seconds = $resttime % 60;
+        $seconds = $math % 60;
         $subminutes = ($seconds -($seconds % 60)) / 60;
         $minutes = $subminutes % 60;
         $subhours = ($minutes -($minutes % 60)) / 60;
