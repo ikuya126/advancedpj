@@ -35,4 +35,4 @@ Route::post('/work_end', [AttendController::class, 'end']);
 Route::post('/rest_start', [RestController::class, 'start']);
 Route::post('/rest_end', [RestController::class, 'end']);
 
-Route::get('/timetable', [DateController::class, 'timetable']);
+Route::get('/date/{page}', [DateController::class, 'timetable'])->name('date');

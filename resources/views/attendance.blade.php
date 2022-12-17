@@ -120,5 +120,3 @@
   </div>
 
 @endsection
-
-</html>

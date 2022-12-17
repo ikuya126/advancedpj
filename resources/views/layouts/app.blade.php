@@ -52,7 +52,7 @@
             <h1 >Atte</h1>
             <div class="header-links">
                 <a href="/attendance" >ホーム</a>
-                <a href="/date" >日付一覧</a>
+                <a href="{{ route('date', ['page' =>'date']) }}" >日付一覧</a>
                 <a href="/logout">ログアウト</a>
             </div>
 

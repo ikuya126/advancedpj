@@ -8,47 +8,68 @@ use App\Models\User;
 use App\Models\Rest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DateController extends Controller
 {
 
 
-    public function timetable()
+    public function timetable(Request $request)
     {
+
 
         $user = Auth::user();
         $data = Attendance::where('user_id',$user->id)->latest()->first();
+        $today = Carbon::today();
 
-        $worktime = Attendance::select(DB::raw('timediff(work_end,work_start) as worktime'))
-        ->where('id', $data->id);
+        $restdates = Rest::where('attendances_id',$data->user_id)->whereDate('date', $today);
 
-        Attendance::where('id', $data->id)->update(['work_time' => $worktime]);
 
-        $rests = Rest::where('attendances_id',$date->user_id)->first();
-
-        $sum = 0;
-
-        foreach($rests as $rest)
+        foreach($restdates as $restdate)
         {
-            $resttime =  Rest::select(DB::raw('timediff(rest_end,rest_start) as resttime'))
-            ->where('attendances_id', $data->id)->value('restime');
+            $rests = $restdate->rest_time;
+            $math = 0;
 
-            $sum = $sum + $resttime;
+            foreach($rests as $rest)
+            {
+                
+                $rest_start = $rest->rest_start;
+                $rest_end = $rest->rest_end;
 
+                $math = $math + strtotime($rest_end) -  strtotime($rest_start);
+
+            }
         }
 
-        Attendance::where('id', $data->id)->update(['rest_time' => $sum]);
+        $seconds = $resttime % 60;
+        $subminutes = ($seconds -($seconds % 60)) / 60;
+        $minutes = $subminutes % 60;
+        $subhours = ($minutes -($minutes % 60)) / 60;
+        $hours = $subhours % 60;
 
-        $name = $user->name;
-        $start = $data->work_start;
+        $rests->rest_time = sprintf('%02d:%02d:%02d',$hours,$minutes,$seconds);
+
+        $start= $data->work_start;
         $end = $data->work_end;
-        $time = $data->work_time;
-        $rest = $data->rest_time;
+        $subworktime = (strtotime($end) - strtotime($start));
 
-        $attendance= Attendance::paginate(5);
+        $worktime = $subworktime - $math;
 
-        return view('/timetable',['name'=> $name,'start' => $start ,
-        'end' => $end, 'time' => $time, 'rest' =>$rest],compact('$attendance'));
+        $work_seconds = $worktime % 60;
+        $work_subminutes = ($work_seconds -($work_seconds % 60)) / 60;
+        $work_minutes = $work_subminutes % 60;
+        $work_subhours = ($work_minutes -($work_minutes % 60)) / 60;
+        $work_hours = $work_subhours % 60;
+
+        $data->work_time = sprintf('%02d:%02d:%02d', $work_hours, $work_minutes, $work_seconds);
+
+
+        $date = $request->input("date")?: Carbon::today()->format("Y-m-d");
+        $attendances = Attendance::whereDate('date', $date)->paginate(5);
+
+
+        return view('/date', ['date' => $date, 'attendances' => $attendances]);
         
     }
 }
