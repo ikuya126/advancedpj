@@ -20,15 +20,13 @@ class DateController extends Controller
 
 
         $user = Auth::user();
-        $data = Attendance::where('user_id',$user->id)->latest()->first();
         $today = Carbon::today()->format("Y-m-d");
+        $attendances = Attendance::whereDate('date', $today)->paginate(5);
 
-        $restdates = Rest::where('attendances_id',$data->id)->whereDate('date', $today);
 
-
-        foreach($restdates as $restdate)
+        foreach($attendances as $attendance)
         {
-            $rests = $restdate->rest_time;
+            $rests = Rest::where('attendances_id',$attendances->id)->whereDate('date', $today);
             $math = 0;
 
             foreach($rests as $rest)
@@ -48,7 +46,7 @@ class DateController extends Controller
         $subhours = ($minutes -($minutes % 60)) / 60;
         $hours = $subhours % 60;
 
-        $rests->rest_time = sprintf('%02d:%02d:%02d',$hours,$minutes,$seconds);
+        $attendances->rest_time = sprintf('%02d:%02d:%02d',$hours,$minutes,$seconds);
 
         $start= $data->work_start;
         $end = $data->work_end;
@@ -62,14 +60,10 @@ class DateController extends Controller
         $work_subhours = ($work_minutes -($work_minutes % 60)) / 60;
         $work_hours = $work_subhours % 60;
 
-        $data->work_time = sprintf('%02d:%02d:%02d', $work_hours, $work_minutes, $work_seconds);
+        $attendances->work_time = sprintf('%02d:%02d:%02d', $work_hours, $work_minutes, $work_seconds);
 
 
-        $date = $request->input("date")?: Carbon::today()->format("Y-m-d");
-        $attendances = Attendance::whereDate('date', $date)->paginate(5);
-
-
-        return view('/date', ['date' => $date, 'attendances' => $attendances]);
+        return view('/date', ['date' => $today, 'attendances' => $attendances]);
         
     }
 }

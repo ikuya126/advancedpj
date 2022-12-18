@@ -40,7 +40,7 @@ class RestController extends Controller
 
         $attend = Attendance::where('user_id', $user->id)->where('date', $today)->first();
 
-        $rest = Rest::where('attendances_id', $attend->user_id);
+        $rest = Rest::where('attendances_id', $attend->id);
 
         $empty = $rest->whereNull('rest_end')->first();
         
