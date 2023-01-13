@@ -27,8 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->time('work_time')->nullable(false)->change();
-            $table->time('rest_time')->nullable(false)->change();
+            $table->string('work_time')->nullable(false)->change();
+            $table->string('rest_time')->nullable(false)->change();
         });
     }
 };

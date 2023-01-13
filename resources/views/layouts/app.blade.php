@@ -31,6 +31,21 @@
         align-items:center;
     }
 
+    .header-links {
+      display:flex;
+      justify-content:space-around;
+      width:500px;
+      margin-right:30px;
+      font-size:25px;
+    }
+
+    a {
+      text-decoration:none;
+      color:black;
+      cursor: pointer;
+      font-weight:bold;
+    }
+
     footer {
         height:8%;
         font-weight:bold;
@@ -52,7 +67,7 @@
             <h1 >Atte</h1>
             <div class="header-links">
                 <a href="/attendance" >ホーム</a>
-                <a href="{{ route('date', ['page' =>'date']) }}" >日付一覧</a>
+                <a href="/timetable" >日付一覧</a>
                 <a href="/logout">ログアウト</a>
             </div>
 

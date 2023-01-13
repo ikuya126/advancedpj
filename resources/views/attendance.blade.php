@@ -12,14 +12,6 @@
       padding-left:35px;
     }
 
-    .header-links {
-      display:flex;
-      justify-content:space-around;
-      width:500px;
-      margin-right:30px;
-      font-size:25px;
-    }
-
     a {
       text-decoration:none;
       color:black;
@@ -72,7 +64,7 @@
       padding: 35px 30px;
     }
 
-    input {
+    button {
       height:100%;
       width:100%;
       font-size:30px;
@@ -82,12 +74,9 @@
       cursor: pointer;
     }
 
-    .button{
-      color:#DCDCDC;
-    }
-
     
   </style>
+
 
     <div class="main">
 
@@ -96,27 +85,91 @@
       </div>
       <div class="button-box">
         <div class="top-button">
-        <form action="/work_start" method="POST" class="button-form">
+        <form action="/work_start" method="POST" class="button-form" name="start">
           @csrf
-          <input type="submit" value="勤務開始" class="button">
+        <button type="submit"  id="startButton" >勤務開始</button>
         </form>
-        <form action="/work_end" method="POST">
+        <form action="/work_end" method="POST" name="end">
           @csrf
-          <input type="submit" value="勤務終了" >
+        <button type="submit" id="endButton" >勤務終了</button>
         </form>
         </div>
         <div class="bottom-button">
-        <form action="/rest_start" method="POST">
+        <form action="/rest_start" method="POST" name="rest-start">
           @csrf
-          <input type="submit" value="休憩開始" >
+          <button type="submit"  id="restInButton" >休憩開始</button>
         </form>
-        <form action="/rest_end" method="POST">
+        <form action="/rest_end" method="POST" name="rest-end">
           @csrf
-          <input type="submit" value="休憩終了" class="button">
+          <button type="submit"  id="restOutButton" >休憩終了</button>
         </form>
+
         </div>
       </div>
+    <script>     
+          document.addEventListener('DOMContentLoaded',function() {
+          
+          var start = @json($start);
+          var end = @json($end);
+          var rest_start = @json($rest_start);
+          var rest_end = @json($rest_end);
 
-  </div>
+          const startButton = document.getElementById('startButton');
+          const endButton = document.getElementById('endButton');
+          const restInButton = document.getElementById('restInButton');
+          const restOutButton = document.getElementById('restOutButton');
+
+          document.getElementById("rest_end").setAttribute("disabled", true);
+          document.getElementById("rest_start").setAttribute("disabled", true);
+          document.getElementById("endButton").setAttribute("disabled", true);
+
+          if(!empty($start)){
+            startButton.disabled = true;
+            endButton.disabled = false;
+            restInButton.disabled = false;
+          }elseif(!rest_start == 0){
+
+          }
+          
+          },false);
+
+          const rest_start = document.getElementById('rest-start');
+
+          rest_start.addEventListener('load',function() {
+          if(!empty($rest_start)){
+          document.getElementById("rest-end").removeAttribute("disabled");
+          document.getElementById("start").setAttribute("disabled", true);
+          document.getElementById("rest-start").setAttribute("disabled", true);
+          document.getElementById("end").setAttribute("disabled", true);
+          }
+          
+          }, false);
+
+          const rest_end = document.getElementById('rest-end');
+
+          rest_end.addEventListener('load',function() {
+          if(!empty($rest_end)){
+          document.getElementById("rest-start").removeAttribute("disabled");
+            document.getElementById("end").removeAttribute("disabled");
+            document.getElementById("start").setAttribute("disabled", true);
+            document.getElementById("rest-end").setAttribute("disabled", true);
+          }
+          
+          }, false);
+
+          const end = document.getElementById('end');
+
+          end.addEventListener('load',function() {
+          if(!empty($end)){
+          document.getElementById("start").setAttribute("disabled", true);
+            document.getElementById("rest-start").setAttribute("disabled", true);
+            document.getElementById("rest-end").setAttribute("disabled", true);
+          }
+          
+          }, false);
+
+
+        </script>
+    </div>
 
 @endsection

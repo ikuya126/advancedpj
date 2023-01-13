@@ -14,30 +14,26 @@ use Illuminate\Support\Facades\DB;
 class DateController extends Controller
 {
 
+    
 
-    public function timetable(Request $request)
+    public function time()
     {
-
-
         $user = Auth::user();
-        $today = Carbon::today()->format("Y-m-d");
-        $attendances = Attendance::whereDate('date', $today)->paginate(5);
+        $today = Carbon::today();
+        $attendances = Attendance::whereDate('date', $today)->where('user_id',$user->id)->first();
+        $restTotal = Rest::whereDate('date', $today)->where('attendances_id',$attendances->id);
 
 
-        foreach($attendances as $attendance)
+        $math = 0;
+
+        foreach($restTotal as $restTotal)
         {
-            $rests = Rest::where('attendances_id',$attendances->id)->whereDate('date', $today);
-            $math = 0;
 
-            foreach($rests as $rest)
-            {
-                
-                $rest_start = $rest->rest_start;
-                $rest_end = $rest->rest_end;
+        $start = $restTotal->rest_start;
+        $end = $restTotal->rest_end;
 
-                $math = $math + strtotime($rest_end) -  strtotime($rest_start);
+        $math = $math + (strtotime($end) -  strtotime($start));
 
-            }
         }
 
         $seconds = $math % 60;
@@ -46,11 +42,14 @@ class DateController extends Controller
         $subhours = ($minutes -($minutes % 60)) / 60;
         $hours = $subhours % 60;
 
-        $attendances->rest_time = sprintf('%02d:%02d:%02d',$hours,$minutes,$seconds);
+        $restTime = sprintf('%02d:%02d:%02d',$hours,$minutes,$seconds);
 
-        $start= $data->work_start;
-        $end = $data->work_end;
-        $subworktime = (strtotime($end) - strtotime($start));
+        $attendances->update(['rest_time' => $restTime]);
+        
+
+        $work_start= $attendances->work_start;
+        $work_end = $attendances->work_end;
+        $subworktime = (strtotime($work_end) - strtotime($work_start));
 
         $worktime = $subworktime - $math;
 
@@ -60,10 +59,22 @@ class DateController extends Controller
         $work_subhours = ($work_minutes -($work_minutes % 60)) / 60;
         $work_hours = $work_subhours % 60;
 
-        $attendances->work_time = sprintf('%02d:%02d:%02d', $work_hours, $work_minutes, $work_seconds);
+        $work_time = sprintf('%02d:%02d:%02d', $work_hours, $work_minutes, $work_seconds);
 
+        $attendances->update(['work_time' => $work_time]);
 
-        return view('/date', ['date' => $today, 'attendances' => $attendances]);
-        
+        return redirect('attendance')->with('successMessage', '退勤完了、お疲れさまでした');
+
     }
+
+    public function timetable(){
+
+        $today = Carbon::today()->format("Y-m-d");
+        $attendances = Attendance::whereDate('date', $today)->paginate(5);
+
+
+        return view('timetable',['today' => $today, 'attendances' => $attendances]);
+
+    }
+
 }

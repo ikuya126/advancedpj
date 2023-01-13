@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->date('date');
-            $table->datetime('work_start');
-            $table->datetime('work_end')->nullable();
+            $table->time('work_start');
+            $table->time('work_end')->nullable();
             $table->time('work_time');
             $table->time('rest_time');
             $table->timestamp('created_at')->useCurrent()->nullable();

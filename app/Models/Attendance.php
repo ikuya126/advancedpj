@@ -10,14 +10,19 @@ class Attendance extends Model
     use HasFactory;
     protected $fillable = ['user_id', 'work_start', 'work_end', 'date','work_time','rest_time'];
 
+    public function getName()
+    {
+      
+    }
+
     public function user()
     {
-        $this->belongsTo(User::class);
+        $this->belongsTo('App\Models\User');
     }
 
     public function rest()
     {
-        return $this->hasMany(Rest::class);
+        return $this->hasMany('App\Models\Rest');
     }
 
 }

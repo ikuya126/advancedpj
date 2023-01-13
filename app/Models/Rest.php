@@ -13,6 +13,6 @@ class Rest extends Model
 
     public function attendance()
     {
-        $this->belongsTo(Attendance::class);
+    return  $this->belongsTo('App\Models\Attendance');
     }
 }

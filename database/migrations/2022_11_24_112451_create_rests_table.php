@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('rests', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('attendances_id');
+            $table->foreign('attendances_id')->references('id')->on('attendances');
             $table->date('date');
-            $table->datetime('rest_start')->nullable();
-            $table->datetime('rest_end')->nullable();
+            $table->time('rest_start')->nullable();
+            $table->time('rest_end')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });
