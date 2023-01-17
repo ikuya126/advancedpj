@@ -14,7 +14,7 @@
 
     .alert-success{
         text-align:center;
-        font-size:40px;
+        font-size:25px;
         font-weight:bold;
         color:#A9A9A9;
     }

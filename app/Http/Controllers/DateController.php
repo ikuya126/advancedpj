@@ -19,14 +19,13 @@ class DateController extends Controller
     public function time()
     {
         $user = Auth::user();
-        $today = Carbon::today();
+        $today = Carbon::today()->format("Y-m-d");
         $attendances = Attendance::whereDate('date', $today)->where('user_id',$user->id)->first();
-        $restTotal = Rest::whereDate('date', $today)->where('attendances_id',$attendances->id);
-
+        $restTotals = Rest::whereDate('date', $today)->where('attendances_id',$user->id)->get();
 
         $math = 0;
 
-        foreach($restTotal as $restTotal)
+        foreach($restTotals as $restTotal)
         {
 
         $start = $restTotal->rest_start;
@@ -40,7 +39,7 @@ class DateController extends Controller
         $subminutes = ($seconds -($seconds % 60)) / 60;
         $minutes = $subminutes % 60;
         $subhours = ($minutes -($minutes % 60)) / 60;
-        $hours = $subhours % 60;
+        $hours = $subhours % 24;
 
         $restTime = sprintf('%02d:%02d:%02d',$hours,$minutes,$seconds);
 
@@ -57,19 +56,41 @@ class DateController extends Controller
         $work_subminutes = ($work_seconds -($work_seconds % 60)) / 60;
         $work_minutes = $work_subminutes % 60;
         $work_subhours = ($work_minutes -($work_minutes % 60)) / 60;
-        $work_hours = $work_subhours % 60;
+        $work_hours = $work_subhours % 24;
 
         $work_time = sprintf('%02d:%02d:%02d', $work_hours, $work_minutes, $work_seconds);
 
         $attendances->update(['work_time' => $work_time]);
 
-        return redirect('attendance')->with('successMessage', '退勤完了、お疲れさまでした');
+        $end = 4;
+        $rest_end = 56;
+        $start = 55;
+        $rest_start = 44;
+
+        return view('attendance',['start'=> $start,'end' => $end,'rest_end' => $rest_end,'rest_start' => $rest_start]);
 
     }
 
     public function timetable(){
 
         $today = Carbon::today()->format("Y-m-d");
+        $attendances = Attendance::whereDate('date', $today)->paginate(5);
+
+
+        return view('timetable',['today' => $today, 'attendances' => $attendances]);
+
+    }
+
+    public function next(Request $request){
+
+        if($request->before == "<"){
+            $date = $request->date;
+            $today = date('Y-m-d', strtotime($date . '-1 day'));
+        }elseif($request->after == ">"){
+            $date = $request->date;
+            $today = date('Y-m-d', strtotime($date . '+1 day'));
+        }
+
         $attendances = Attendance::whereDate('date', $today)->paginate(5);
 
 

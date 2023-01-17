@@ -37,3 +37,4 @@ Route::post('/rest_end', [RestController::class, 'end']);
 
 Route::get('/date', [DateController::class, 'time']);
 Route::get('/timetable', [DateController::class, 'timetable']);
+Route::post('/timetable', [DateController::class, 'next']);

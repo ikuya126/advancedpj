@@ -103,10 +103,11 @@
           @csrf
           <button type="submit"  id="restOutButton" >休憩終了</button>
         </form>
-
         </div>
       </div>
-    <script>     
+    
+    </div>
+<script>     
           document.addEventListener('DOMContentLoaded',function() {
           
           var start = @json($start);
@@ -119,57 +120,34 @@
           const restInButton = document.getElementById('restInButton');
           const restOutButton = document.getElementById('restOutButton');
 
-          document.getElementById("rest_end").setAttribute("disabled", true);
-          document.getElementById("rest_start").setAttribute("disabled", true);
-          document.getElementById("endButton").setAttribute("disabled", true);
-
-          if(!empty($start)){
+          if(start == 1){
+            endButton.disabled = true;
+            restInButton.disabled = true;
+            restOutButton.disabled = true;
+          }else if(start == 0){
             startButton.disabled = true;
             endButton.disabled = false;
             restInButton.disabled = false;
-          }elseif(!rest_start == 0){
-
+          }else if(rest_start == 2){
+            startButton.disabled = true;
+            endButton.disabled = true;
+            restInButton.disabled = true;
+            restOutButton.disabled = false;
+          }else if(rest_end == 3){
+            startButton.disabled = true;
+            endButton.disabled = false;
+            restInButton.disabled = false;
+            restOutButton.disabled = true;
+          }else if(end == 4){
+            startButton.disabled = true;
+            endButton.disabled = true;
+            restInButton.disabled = true;
+            restOutButton.disabled = true;
           }
+
+        
           
           },false);
 
-          const rest_start = document.getElementById('rest-start');
-
-          rest_start.addEventListener('load',function() {
-          if(!empty($rest_start)){
-          document.getElementById("rest-end").removeAttribute("disabled");
-          document.getElementById("start").setAttribute("disabled", true);
-          document.getElementById("rest-start").setAttribute("disabled", true);
-          document.getElementById("end").setAttribute("disabled", true);
-          }
-          
-          }, false);
-
-          const rest_end = document.getElementById('rest-end');
-
-          rest_end.addEventListener('load',function() {
-          if(!empty($rest_end)){
-          document.getElementById("rest-start").removeAttribute("disabled");
-            document.getElementById("end").removeAttribute("disabled");
-            document.getElementById("start").setAttribute("disabled", true);
-            document.getElementById("rest-end").setAttribute("disabled", true);
-          }
-          
-          }, false);
-
-          const end = document.getElementById('end');
-
-          end.addEventListener('load',function() {
-          if(!empty($end)){
-          document.getElementById("start").setAttribute("disabled", true);
-            document.getElementById("rest-start").setAttribute("disabled", true);
-            document.getElementById("rest-end").setAttribute("disabled", true);
-          }
-          
-          }, false);
-
-
         </script>
-    </div>
-
 @endsection

@@ -14,7 +14,7 @@ class AttendController extends Controller
     public function index()
     {
         $user = User::all();
-        $start = 0;
+        $start = 1;
         $end = 0;
         $rest_start = 0;
         $rest_end = 0;
@@ -28,6 +28,15 @@ class AttendController extends Controller
         $user = Auth::user();
 
         $newDay = Carbon::today();
+        
+        $oldDay = Attendance::where('user_id',$user->id)->latest()->first();
+        if( !empty($oldDay)) {
+            $oldDate = $oldDay->date;
+            $newDate = $newDay->format('Y-m-d');
+            if($oldDate == $newDate) {
+                return redirect()->back()->with('successMessage', '既に出勤中しました');
+            }
+        }
 
         Attendance::create([
             'user_id' => $user->id,
@@ -35,11 +44,12 @@ class AttendController extends Controller
             'date' => new Carbon('today')
         ]);
 
-        $attendances = Attendance::where('user_id',$user->id)->whereDate('date', $newDay)->first();
+        $start = 0;
+        $end = 0;
+        $rest_start = 0;
+        $rest_end = 0;
 
-        $start = $attendances->work_start;
-
-        return redirect()->back()->with('successMessage', '出勤開始')->with('start',$start);
+        return view('attendance',['start'=> $start,'end' => $end,'rest_end' => $rest_end,'rest_start' => $rest_start]);
     }
         
     public function end()
@@ -52,11 +62,7 @@ class AttendController extends Controller
             'work_end' => Carbon::now()
         ]);
 
-        $attendances = Attendance::whereDate('date', $newDay)->where('user_id',$user->id)->first();
-
-        $work_end = $attendances->work_end;
-
-        return redirect('/date')->with('work_end',$work_end);
+        return redirect('/date');
     }
 
     

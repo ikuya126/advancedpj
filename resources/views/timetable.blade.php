@@ -70,8 +70,9 @@
 
 <div class="main">
   <div class="date">
-    <form actioin="date" method="POST">
+    <form actioin="/timetable" method="POST">
       @csrf
+      <input type="hidden" name= "date" value = <?= $today ?>>
       <input type="submit" class="date-button" name="before" value="<">
       <p>{{$today}}</p>
       <input type="submit" class="date-button" name="after" value=">">
@@ -81,16 +82,16 @@
       <table>
         <div class="infomation">
           <tr>
-            <th class="name">名前</th>
-            <th class="start">勤務開始</th>
-            <th class="end">勤務終了</th>
-            <th class="resttime">休憩時間</th>
-            <th class="worktime">勤務時間</th>
+            <th >名前</th>
+            <th >勤務開始</th>
+            <th >勤務終了</th>
+            <th >休憩時間</th>
+            <th >勤務時間</th>
           </tr>
         </div>
         @foreach($attendances as $attendance)
           <tr>
-            <td >{{$attendance->getName()}}</td>
+            <td >{{$attendance->user->name}}</td>
             <td >{{$attendance->work_start}}</td>
             <td >{{$attendance->work_end}}</td>
             <td >{{$attendance->rest_time}}</td>

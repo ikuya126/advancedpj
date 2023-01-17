@@ -29,11 +29,13 @@ class RestController extends Controller
             'date' => new Carbon('today')
             ]);
 
-        $rest = Rest::where('attendances_id', $attend->user_id)->where('date', $newDay)->latest()->first();
+    
+        $rest_start = 2;
+        $start = 55;
+        $end = 0;
+        $rest_end = 0;
 
-        $rest_start = $rest->rest_start;
-
-        return redirect()->back()->with('successMessage', '休憩開始')->with('rest_start',$rest_start);
+       return view('attendance',['start'=> $start,'end' => $end,'rest_end' => $rest_end,'rest_start' => $rest_start]);
     }
 
     public function end()
@@ -45,14 +47,15 @@ class RestController extends Controller
 
         $attend = Attendance::where('user_id', $user->id)->where('date', $today)->first();
 
-        $rest = Rest::where('attendances_id', $attend->user_id)->whereNull('rest_end');
+        $rest = Rest::where('attendances_id', $user->id)->whereNull('rest_end')->latest();
         
-        $rest->update(['rest_end' => $now]);
+        $rest->update(['rest_end' => Carbon::now()]);
 
-        $restout = Rest::where('attendances_id', $attend->user_id)->where('date', $today)->first();
+        $rest_end = 3;
+        $rest_start = 44;
+        $start = 55;
+        $end = 0;
 
-        $rest_end = $restout->rest_end;
-
-        return redirect()->back()->with('successMessage', '休憩終了')->with('rest_end',$rest_end);
+       return view('attendance',['start'=> $start,'end' => $end,'rest_end' => $rest_end,'rest_start' => $rest_start]);
     }
 }
